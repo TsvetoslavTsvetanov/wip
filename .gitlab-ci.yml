@@ -1,7 +1,5 @@
 varables:
   MAVEN_OPTS: -Dmaven.repo.local=.m2/repository
-
-image: maven:latest
 stages:
     - build
     - test
@@ -19,6 +17,8 @@ compile:
     - docker
   script:
     - "mvn compile"
+
+
 
 test:
   stage: test
