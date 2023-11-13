@@ -1,0 +1,10 @@
+/Users/tsvetoslavtsvetanov/workshops/world-in-pictures/src/main/java/com/worldinpictures/domain/entities/Album.java
+/Users/tsvetoslavtsvetanov/workshops/world-in-pictures/src/main/java/com/worldinpictures/domain/entities/BaseEntity.java
+/Users/tsvetoslavtsvetanov/workshops/world-in-pictures/src/main/java/com/worldinpictures/domain/entities/Comment.java
+/Users/tsvetoslavtsvetanov/workshops/world-in-pictures/src/main/java/com/worldinpictures/domain/entities/Image.java
+/Users/tsvetoslavtsvetanov/workshops/world-in-pictures/src/main/java/com/worldinpictures/domain/entities/User.java
+/Users/tsvetoslavtsvetanov/workshops/world-in-pictures/src/main/java/com/worldinpictures/domain/repositories/UserRepository.java
+/Users/tsvetoslavtsvetanov/workshops/world-in-pictures/src/main/java/com/worldinpictures/domain/repositories/AlbumRepository.java
+/Users/tsvetoslavtsvetanov/workshops/world-in-pictures/src/main/java/com/worldinpictures/domain/entities/Location.java
+/Users/tsvetoslavtsvetanov/workshops/world-in-pictures/src/main/java/com/worldinpictures/WorldInPicturesApplication.java
+/Users/tsvetoslavtsvetanov/workshops/world-in-pictures/src/main/java/com/worldinpictures/domain/repositories/ImageRepository.java
