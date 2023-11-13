@@ -5,6 +5,7 @@ stages:
 
 compile:
   stage: build
+  image: "maven:3.8.4-openjdk-11"
   tags:
     - docker
   script:
@@ -14,6 +15,7 @@ test:
   stage: test
   needs:
     - job: compile
+  image: "maven:3.8.4-openjdk-11"
   tags:
     - docker
   script:
