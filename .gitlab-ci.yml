@@ -1,37 +1,30 @@
+varables:
+  MAVEN_OPTS: -Dmaven.repo.local=.m2/repository
+
+image: maven:latest
 stages:
     - build
     - test
     - deploy 
 
+cache:
+  path:
+    - .m2/repository
+    - target
+
 # Compile sources and test-sources
 compile:
   stage: build
-  image: $IMAGE_TAG
+  tags:
+    - docker
   script:
-    - pwd
-    - ls -lah
-    - mvn $MAVEN_OPTS -s $MAVEN_SETTINGS_XML -B test-compile -DskipTests
-  artifacts:
-    name: $CI_COMMIT_REF_SLUG
-    expire_in: 1 hour
-    paths:
-      - target
+    - "mvn compile"
 
 test:
   stage: test
-  image: $IMAGE_TAG
   needs:
     - job: compile
-      artifacts: true
+  tags:
+    - docker
   script:
-    - export TZ="Europe/Brussels"    
-    - mvn $MAVEN_CLI_OPTS -s $MAVEN_SETTINGS_XML org.jacoco:jacoco-maven-plugin:prepare-agent verify $MAVEN_OPTS
-  artifacts:
-    name: $CI_COMMIT_REF_SLUG
-    expire_in: 1 hour
-    paths:
-      - target
-    reports:
-      junit:
-        - target/surefire-reports/TEST-*.xml
-        - target/failsafe-reports/TEST-*.xml
+    - "mvn test"
