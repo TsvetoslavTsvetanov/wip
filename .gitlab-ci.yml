@@ -1,24 +1,14 @@
-varables:
-  MAVEN_OPTS: -Dmaven.repo.local=.m2/repository
 stages:
     - build
     - test
     - deploy 
 
-cache:
-  path:
-    - .m2/repository
-    - target
-
-# Compile sources and test-sources
 compile:
   stage: build
   tags:
     - docker
   script:
     - "mvn compile"
-
-
 
 test:
   stage: test
