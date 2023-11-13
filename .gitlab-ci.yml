@@ -1,0 +1,37 @@
+stages:
+    - build
+    - test
+    - deploy 
+
+# Compile sources and test-sources
+compile:
+  stage: build
+  image: $IMAGE_TAG
+  script:
+    - pwd
+    - ls -lah
+    - mvn $MAVEN_OPTS -s $MAVEN_SETTINGS_XML -B test-compile -DskipTests
+  artifacts:
+    name: $CI_COMMIT_REF_SLUG
+    expire_in: 1 hour
+    paths:
+      - target
+
+test:
+  stage: test
+  image: $IMAGE_TAG
+  needs:
+    - job: compile
+      artifacts: true
+  script:
+    - export TZ="Europe/Brussels"    
+    - mvn $MAVEN_CLI_OPTS -s $MAVEN_SETTINGS_XML org.jacoco:jacoco-maven-plugin:prepare-agent verify $MAVEN_OPTS
+  artifacts:
+    name: $CI_COMMIT_REF_SLUG
+    expire_in: 1 hour
+    paths:
+      - target
+    reports:
+      junit:
+        - target/surefire-reports/TEST-*.xml
+        - target/failsafe-reports/TEST-*.xml
