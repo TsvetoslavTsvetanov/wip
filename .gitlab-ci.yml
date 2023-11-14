@@ -1,12 +1,23 @@
 stages:
+    - compile
     - build
     - test
     - release
     - deploy 
 
 compile:
+  stage: compile
+  image: maven:3.8.4-openjdk-11
+  tags:
+    - docker
+  before_script:
+    - echo "Starting build phase"
+  script:
+    - "mvn compile"
+
+build:
   stage: build
-  image: docker:20
+  image: dind
   services:
     - docker:dind
   tags:
