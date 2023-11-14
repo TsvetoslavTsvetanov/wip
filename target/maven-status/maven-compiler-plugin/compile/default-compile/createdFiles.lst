@@ -1,0 +1,12 @@
+com/worldinpictures/domain/entities/Location.class
+com/worldinpictures/domain/repositories/AlbumRepository.class
+com/worldinpictures/domain/repositories/UserRepository.class
+com/worldinpictures/WorldInPicturesApplication.class
+com/worldinpictures/domain/entities/Image.class
+com/worldinpictures/domain/repositories/ImageRepository.class
+com/worldinpictures/domain/entities/Album.class
+com/worldinpictures/domain/entities/User.class
+com/worldinpictures/domain/entities/BaseEntity.class
+com/worldinpictures/domain/entities/User$UserBuilder.class
+com/worldinpictures/domain/entities/Comment.class
+com/worldinpictures/domain/entities/Image$ImageBuilder.class
