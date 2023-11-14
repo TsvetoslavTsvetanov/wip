@@ -64,7 +64,7 @@ jobs:
         uses: actions/setup-docker@v2
         
       - name: Build Docker image
-       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
 
     
   deploy:
