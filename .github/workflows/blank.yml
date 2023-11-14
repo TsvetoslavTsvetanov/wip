@@ -34,12 +34,6 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
-      - name: Set up Docker
-        uses: actions/setup-docker@v2
-
-      - name: Start Docker daemon
-        run: docker info
-
       - name: Build and run tests
         run: mvn test
 
