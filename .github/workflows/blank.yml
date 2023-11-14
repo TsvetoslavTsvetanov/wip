@@ -58,9 +58,6 @@ jobs:
 
       - name: Build JAR
         run: mvn clean install -DskipTests
-        artifacts:
-          paths:
-            - target/*.jar
 
   build_docker_image:
     runs-on: ubuntu-latest
