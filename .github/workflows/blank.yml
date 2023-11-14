@@ -19,7 +19,7 @@ jobs:
         java-version: '11'  # You can change this to your desired Java version
 
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package --file pom.xml -Ddistribution=https://repo.maven.apache.org/maven2
 
   test:
     runs-on: ubuntu-latest
