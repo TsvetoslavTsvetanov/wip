@@ -38,11 +38,3 @@ release-image:
     - docker push $CONTAINER_RELEASE_IMAGE
   only:
     - Tsveti
-
-deploy:
-  stage: deploy
-  script:
-    - ./deploy.sh
-  only:
-    - Tsveti
-  environment: production
