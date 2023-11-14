@@ -1,8 +1,8 @@
 stages:
     - compile
-    - build
     - test
-    - release
+    - build
+    - build_image
     - deploy 
 
 compile:
@@ -11,23 +11,9 @@ compile:
   tags:
     - docker
   before_script:
-    - echo "Starting build phase"
+    - echo "Starting compile phase"
   script:
     - "mvn compile"
-
-build:
-  stage: build
-  image: dind
-  services:
-    - docker:dind
-  tags:
-    - docker
-  before_script:
-    - echo "Starting build phase"
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE:world-in-pictures" .
-    - docker push "$CI_REGISTRY_IMAGE:world-in-pictures"
 
 test:
   stage: test
@@ -41,11 +27,40 @@ test:
   script:
     - "mvn test"
 
-release-image:
-  stage: release
+build:
+  stage: build
+  image:  maven:3.8.4-openjdk-11
+  tags:
+    - docker
   script:
-    - docker pull $CONTAINER_TEST_IMAGE
-    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
-    - docker push $CONTAINER_RELEASE_IMAGE
-  only:
-    - Tsveti
+    - "mvn clean install -DskipTests"
+  artifacts:
+    paths:
+      - target/*.jar
+
+build_docker_image:
+  stage: build_image
+  image: docker:20
+  services:
+    - docker:dind
+  before_script:
+    - echo "Starting build image"
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:world-in-picture" .
+  after_script:
+    - docker push "$CI_REGISTRY_IMAGE:world-in-picture"
+
+deploy:      # This job runs in the deploy stage.
+  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
+  environment: production
+  image: docker:20
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - echo "Deploying application..."
+    - docker run -d -p 8080:80 "$CI_REGISTRY_IMAGE:world-in-pictures"
+
+    
