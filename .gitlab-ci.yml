@@ -1,6 +1,7 @@
 stages:
     - build
     - test
+    - release
     - deploy 
 
 compile:
@@ -29,21 +30,19 @@ test:
   script:
     - "mvn test"
 
-publish:
-  stage: deploy
-  image: docker:20
-  services:
-    - docker:dind
-  tags:
-    - docker
-  needs:
-    - job: compile
-      artifacts: true
-    - job: test
-      artifacts: true
-  before_script:
-    - echo "Starting deployment phase"
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+release-image:
+  stage: release
   script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE:world-in-pictures"
-    - docker push "$CI_REGISTRY_IMAGE:world-in-pictures"
+    - docker pull $CONTAINER_TEST_IMAGE
+    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
+    - docker push $CONTAINER_RELEASE_IMAGE
+  only:
+    - Tsveti
+
+deploy:
+  stage: deploy
+  script:
+    - ./deploy.sh
+  only:
+    - Tsveti
+  environment: production
