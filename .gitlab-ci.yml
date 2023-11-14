@@ -16,7 +16,6 @@ compile:
   script:
     - docker build --pull -t "$CI_REGISTRY_IMAGE:world-in-pictures" .
     - docker push "$CI_REGISTRY_IMAGE:world-in-pictures"
-    - "mvn compile"
 
 test:
   stage: test
